@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "lib": ["es7","DOM"],
+    "target": "ES2017",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "plugins": [
+      { "name": "typescript-tslint-plugin" }
+    ]
+  },
+  "exclude" : [
+    "**/**/node_modules",
+    "src/migration/**/**",
+    "node_modules"
+  ]
+}
