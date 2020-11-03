@@ -1,21 +1,26 @@
+import { promises as Fs } from "fs";
+import * as Path from "path";
 import {
     BeforeInsert,
     BeforeUpdate,
     Column,
-    OneToOne,
-    ManyToMany
-} from "typeorm";
 
-import {User} from "./user.model";
-import {promises as Fs} from "fs";
-import * as Path from "path";
-import {MimeTypes, ImageMimeTypes} from "../enums/mime-type.enum";
-import {DocumentTypes} from "../enums/document-type.enum";
-import { JsonApiModel } from "../../core/models/json-api.model";
-import { DocumentSerializer } from "../serializers/document.serializer";
-import { DocumentRepository } from "../repositories/document.repository";
+    ManyToMany,
+
+    ManyToOne,
+
+    OneToMany, OneToOne
+} from "typeorm";
 import { JsonApiEntity } from "../../core/decorators/model.decorator";
+import { JsonApiModel } from "../../core/models/json-api.model";
+import { DocumentTypes } from "../enums/document-type.enum";
+import { ImageMimeTypes, MimeTypes } from "../enums/mime-type.enum";
+import { Category } from "../models/category.model";
+import { Sku } from "../models/sku.model";
+import { DocumentRepository } from "../repositories/document.repository";
+import { DocumentSerializer } from "../serializers/document.serializer";
 import * as DocumentValidator from "../validations/document.validation";
+import { User } from "./user.model";
 
 export interface DocumentInterface {
     fieldname: DocumentTypes;
@@ -27,6 +32,8 @@ export interface DocumentInterface {
     users: User[];
     user_avatar: User;
     deleted_at: Date;
+    sku_media;
+    category_media;
 }
 
 @JsonApiEntity("documents", {
@@ -99,4 +106,9 @@ export class Document extends JsonApiModel<Document> implements DocumentInterfac
 
         return Promise.all(promises);
     }
+
+    @ManyToOne(() => Sku, (inverseRelation) => inverseRelation.media)
+    public sku_media;
+    @OneToOne(() => Category, (inverseRelation) => inverseRelation.media)
+    public category_media;
 }

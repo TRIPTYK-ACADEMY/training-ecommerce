@@ -23,9 +23,11 @@ import ConfigurationService from "../core/services/configuration.service";
 import NotFoundMiddleware from "../core/middlewares/not-found.middleware";
 import ErrorMiddleware from "../core/middlewares/error.middleware";
 import RateLimitMiddleware from "./middlewares/rate-limit.middleware";
+import SkuController from "./controllers/sku.controller";
+import CategoryController from "./controllers/category.controller";
 
 @RegisterApplication({
-    controllers: [AuthController, UserController, DocumentController, StatusController, MetadataController, GeneratorController],
+    controllers: [AuthController, UserController, DocumentController, StatusController, MetadataController, GeneratorController, SkuController, CategoryController],
     services:[MailService, TypeORMService, MulterService, PassportService, LoggerService, ConfigurationService]
 })
 @GlobalMiddleware(RateLimitMiddleware)
